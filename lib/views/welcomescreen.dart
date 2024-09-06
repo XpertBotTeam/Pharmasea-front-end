@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'builddot.dart';
+import '../builddot.dart';
 
-class  Lastwelcomescreen extends StatelessWidget {
+class Welcomescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -43,7 +43,7 @@ class  Lastwelcomescreen extends StatelessWidget {
                   Column(
                     children: [
                       Image.asset(
-                        'img/medical-products.png',
+                        'img/prescription.png',
                         height: isPortrait
                             ? screenHeight * 0.25
                             : screenHeight * 0.4, // Adjust based on orientation
@@ -55,7 +55,7 @@ class  Lastwelcomescreen extends StatelessWidget {
 
                       // Main title
                       Text(
-                        'get your medical products instantly',
+                        'Upload your prescription via WhatsApp',
                         style: TextStyle(
                           fontSize: screenWidth * 0.06,
                           fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class  Lastwelcomescreen extends StatelessWidget {
 
                       // Description text
                       Text(
-                        'your products are delivered home safely and securely',
+                        'Find your favourite products that you need to buy daily',
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           color: Colors.black54,
@@ -81,9 +81,9 @@ class  Lastwelcomescreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      BuildDot(isActive: false, screenWidth: screenWidth),
-                      BuildDot(isActive: false, screenWidth: screenWidth),
                       BuildDot(isActive: true, screenWidth: screenWidth),
+                      BuildDot(isActive: false, screenWidth: screenWidth),
+                      BuildDot(isActive: false, screenWidth: screenWidth),
                     ],
                   ),
 
@@ -105,7 +105,7 @@ class  Lastwelcomescreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Finish',
+                        'NEXT',
                         style: TextStyle(fontSize: screenWidth * 0.045), // Responsive text
                       ),
                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'builddot.dart';
+import '../builddot.dart';
 
 class  Secondwelcomescreen extends StatelessWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'builddot.dart';
+import '../builddot.dart';
 
-class PrescriptionUploadScreen extends StatelessWidget {
+class  Lastwelcomescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -43,7 +43,7 @@ class PrescriptionUploadScreen extends StatelessWidget {
                   Column(
                     children: [
                       Image.asset(
-                        'img/prescription.png',
+                        'img/medical-products.png',
                         height: isPortrait
                             ? screenHeight * 0.25
                             : screenHeight * 0.4, // Adjust based on orientation
@@ -55,7 +55,7 @@ class PrescriptionUploadScreen extends StatelessWidget {
 
                       // Main title
                       Text(
-                        'Upload your prescription via WhatsApp',
+                        'get your medical products instantly',
                         style: TextStyle(
                           fontSize: screenWidth * 0.06,
                           fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class PrescriptionUploadScreen extends StatelessWidget {
 
                       // Description text
                       Text(
-                        'Find your favourite products that you need to buy daily',
+                        'your products are delivered home safely and securely',
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           color: Colors.black54,
@@ -81,9 +81,9 @@ class PrescriptionUploadScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      BuildDot(isActive: false, screenWidth: screenWidth),
+                      BuildDot(isActive: false, screenWidth: screenWidth),
                       BuildDot(isActive: true, screenWidth: screenWidth),
-                      BuildDot(isActive: false, screenWidth: screenWidth),
-                      BuildDot(isActive: false, screenWidth: screenWidth),
                     ],
                   ),
 
@@ -105,7 +105,7 @@ class PrescriptionUploadScreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'NEXT',
+                        'Finish',
                         style: TextStyle(fontSize: screenWidth * 0.045), // Responsive text
                       ),
                     ),
