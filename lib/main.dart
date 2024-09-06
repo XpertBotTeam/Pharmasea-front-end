@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pharmasea/routes/Apppage.dart';
+import 'package:pharmasea/routes/Approute.dart';
 import 'package:pharmasea/views/welcomescreen.dart';
 
 void main() {
@@ -9,9 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      initialRoute: Approute.welcomescreen,
+      getPages: Apppage.pages,
       home: Welcomescreen(),
       debugShowCheckedModeBanner: false,
+      
     );
   }
 }
