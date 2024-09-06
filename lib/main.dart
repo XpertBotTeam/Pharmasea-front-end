@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmasea/welcomescreen-3.dart';
 import 'package:pharmasea/welcomescreen.dart';
 import 'welcomescreen-2.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: GetMedicalProductsScreen(),
+      home: Lastwelcomescreen(),
       debugShowCheckedModeBanner: false,
     );
   }

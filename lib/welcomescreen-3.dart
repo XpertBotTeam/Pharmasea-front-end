@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'builddot.dart';
 
-class  Secondwelcomescreen extends StatelessWidget {
+class  Lastwelcomescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -43,7 +43,7 @@ class  Secondwelcomescreen extends StatelessWidget {
                   Column(
                     children: [
                       Image.asset(
-                        'img/get_products.png',
+                        'img/medical-products.png',
                         height: isPortrait
                             ? screenHeight * 0.25
                             : screenHeight * 0.4, // Adjust based on orientation
@@ -55,7 +55,7 @@ class  Secondwelcomescreen extends StatelessWidget {
 
                       // Main title
                       Text(
-                        'Browse for medical products',
+                        'get your medical products instantly',
                         style: TextStyle(
                           fontSize: screenWidth * 0.06,
                           fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class  Secondwelcomescreen extends StatelessWidget {
 
                       // Description text
                       Text(
-                        'Pay for the products you buy safely and easily',
+                        'your products are delivered home safely and securely',
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           color: Colors.black54,
@@ -82,8 +82,8 @@ class  Secondwelcomescreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BuildDot(isActive: false, screenWidth: screenWidth),
-                      BuildDot(isActive: true, screenWidth: screenWidth),
                       BuildDot(isActive: false, screenWidth: screenWidth),
+                      BuildDot(isActive: true, screenWidth: screenWidth),
                     ],
                   ),
 
@@ -105,7 +105,7 @@ class  Secondwelcomescreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'NEXT',
+                        'Finish',
                         style: TextStyle(fontSize: screenWidth * 0.045), // Responsive text
                       ),
                     ),
