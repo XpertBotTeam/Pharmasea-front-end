@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../builddot.dart';
-
+import 'package:get/get.dart';
+import 'package:pharmasea/routes/Approute.dart';
 class  Lastwelcomescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class  Lastwelcomescreen extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () {
-                          
+                          Get.toNamed(Approute.registration);
                         },
                         child: Text(
                           'SKIP',
@@ -92,7 +93,7 @@ class  Lastwelcomescreen extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: screenHeight * 0.05),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add next functionality here
+                        Get.toNamed(Approute.registration);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,

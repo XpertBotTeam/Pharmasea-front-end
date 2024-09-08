@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pharmasea/routes/Approute.dart';
 import '../builddot.dart';
 
 class  Secondwelcomescreen extends StatelessWidget {
@@ -26,7 +28,7 @@ class  Secondwelcomescreen extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () {
-                          
+                          Get.toNamed(Approute.registration);
                         },
                         child: Text(
                           'SKIP',
@@ -92,7 +94,7 @@ class  Secondwelcomescreen extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: screenHeight * 0.05),
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add next functionality here
+                        Get.toNamed(Approute.welcomescreen3);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,

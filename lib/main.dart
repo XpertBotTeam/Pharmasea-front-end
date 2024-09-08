@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
       getPages: Apppage.pages,
       home: Welcomescreen(),
       debugShowCheckedModeBanner: false,
-      
-    );
+     );
   }
 }

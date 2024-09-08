@@ -11,8 +11,8 @@ class Apppage{
     GetPage(name: Approute.welcomescreen, page: ()=>Welcomescreen()),
     GetPage(name: Approute.welcomescreen2, page: ()=>Secondwelcomescreen()),
     GetPage(name: Approute.welcomescreen3, page: ()=>Lastwelcomescreen()),
-    GetPage(name: Approute.registration, page: ()=>Registration(),binding: Registrationbinding()),
-    GetPage(name: Approute.login, page: ()=>Login())
+    GetPage(name: Approute.registration, page: ()=>RegistrationPage(),binding: Registrationbinding()),
+    GetPage(name: Approute.login, page: ()=>LoginPage())
 
   ];
 }
