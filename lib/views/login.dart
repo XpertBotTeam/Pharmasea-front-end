@@ -5,7 +5,6 @@ import '../controllers/LoginController.dart';
 
 class LoginPage extends StatelessWidget {
   final Logincontroller controller = Get.put(Logincontroller());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,8 +141,8 @@ class LoginPage extends StatelessWidget {
     }
 
     if (emailError == null && passwordError == null) {
-      // If both fields are valid, proceed with the login
-      print('Login successful');
+      Get.toNamed(Approute.home);
+
       // Here you can trigger the actual login logic, such as API calls.
     } else {
       // If any field has an error, display it using Get.snackbar

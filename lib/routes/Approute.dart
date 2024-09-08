@@ -4,4 +4,5 @@ class Approute{
   static const String welcomescreen3='/welcomescreen-3';  
   static const String registration='/registration';
   static const String login='/login';
+  static const String home='/homePage';
 }

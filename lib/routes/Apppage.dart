@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:pharmasea/binding/loginbinding.dart';
 import 'package:pharmasea/binding/registrationbinding.dart';
 import 'package:pharmasea/routes/Approute.dart';
+import 'package:pharmasea/views/homePage.dart';
 import 'package:pharmasea/views/login.dart';
 import 'package:pharmasea/views/registration.dart';
 import 'package:pharmasea/views/welcomescreen-2.dart';
@@ -12,7 +14,8 @@ class Apppage{
     GetPage(name: Approute.welcomescreen2, page: ()=>Secondwelcomescreen()),
     GetPage(name: Approute.welcomescreen3, page: ()=>Lastwelcomescreen()),
     GetPage(name: Approute.registration, page: ()=>RegistrationPage(),binding: Registrationbinding()),
-    GetPage(name: Approute.login, page: ()=>LoginPage())
+    GetPage(name: Approute.login, page: ()=>LoginPage(),binding: Loginbinding()),
+    GetPage(name: Approute.home, page: ()=>Homepage())
 
   ];
 }
