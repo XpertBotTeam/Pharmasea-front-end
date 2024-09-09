@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmasea/models/drug.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmasea/views/buyDrug.dart';
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -10,6 +11,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   String _filterOption = 'All'; // Default filter option
+  String _selectedCategory = 'All'; // Default category filter
 
   @override
   Widget build(BuildContext context) {
@@ -50,93 +52,202 @@ class _HomepageState extends State<Homepage> {
             ],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ListView.builder(
-            itemCount: _getFilteredDrugs().length,
-            itemBuilder: (context, index) {
-              final drug = _getFilteredDrugs()[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6.0),
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            drug.Image,
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                drug.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Price: \$${drug.price}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Expiry Date: ${drug.expiryDate}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                drug.prescriptionIsRequired
-                                    ? 'Prescription required'
-                                    : 'No prescription required',
-                                style: TextStyle(
-                                  color: drug.prescriptionIsRequired
-                                      ? Colors.red
-                                      : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        IconButton(
-                          icon: const Icon(Icons.info_outline),
-                          onPressed: () {
-                            _showDrugDetails(context, drug);
-                          },
-                        ),
-                      ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Categories Section
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Shop By Category",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                  ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedCategory = 'All';
+                        });
+                      }, // Clear the category filter
+                      child: const Text("See All"),
+                    ),
+                  ],
                 ),
-              );
-            },
+              ),
+              SizedBox(
+                height: 50, // Height of the horizontal category list
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildCategoryItem('heart', 'heart Drug', FontAwesomeIcons.heart),
+                    _buildCategoryItem('lung', 'lung Drug', FontAwesomeIcons.lungs),
+                    _buildCategoryItem('eye', 'Eye Drug', Icons.visibility_outlined),
+                  ],
+                ),
+              ),
+              
+              // Recommended Products Section
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text(
+                  "Recommend for you",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // Two columns
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.9, // Aspect ratio for the grid items
+                ),
+                itemCount: _getFilteredDrugsByCategory().length,
+                itemBuilder: (context, index) {
+                  final drug = _getFilteredDrugsByCategory()[index];
+                  return _buildProductCard(drug);
+                },
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  // Helper widget for building a category item
+  Widget _buildCategoryItem(String category, String label, IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _selectedCategory = category;
+          });
+        },
+        child: Chip(
+          avatar: Icon(icon, color: Colors.white),
+          label: Text(label, style: const TextStyle(color: Colors.white)),
+          backgroundColor: Colors.redAccent, // Customize as per design
+        ),
+      ),
+    );
+  }
+
+  // Helper widget for building a product card
+  Widget _buildProductCard(Drug drug) {
+    return 
+    GestureDetector(
+    onTap: () {
+      // Navigate to BuyDrug page when a drug is clicked
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BuyDrug(drug: drug),
+        ),
+      );
+    },
+    child: Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0), // Reduced padding for smaller background
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                drug.Image,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Text(
+              drug.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Text(
+              '\$${drug.price}',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {
+                _showDrugDetails(drug); // Show drug details when tapped
+              },
+            ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+    );
+  }
+
+  // Function to show drug details in a dialog
+  void _showDrugDetails(Drug drug) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(drug.name),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Price: \$${drug.price}'),
+              Text('Company: ${drug.company}'),
+              Text('Expiry Date: ${drug.expiryDate}'),
+              Text('Description: ${drug.infoDescription}'),
+              Text('Prescription Required: ${drug.prescriptionIsRequired ? "Yes" : "No"}'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to filter drugs based on both the selected category and prescription filter
+  List<Drug> _getFilteredDrugsByCategory() {
+    List<Drug> filteredDrugs = drugList;
+
+    // Apply category filter
+    if (_selectedCategory != 'All') {
+      filteredDrugs = filteredDrugs.where((drug) => drug.category == _selectedCategory).toList();
+    }
+
+    // Apply prescription filter
+    if (_filterOption == 'Prescription Required') {
+      filteredDrugs = filteredDrugs.where((drug) => drug.prescriptionIsRequired).toList();
+    } else if (_filterOption == 'No Prescription') {
+      filteredDrugs = filteredDrugs.where((drug) => !drug.prescriptionIsRequired).toList();
+    }
+
+    return filteredDrugs;
   }
 
   // Function to show the filter dialog with radio buttons
@@ -188,50 +299,6 @@ class _HomepageState extends State<Homepage> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // Function to filter drugs based on the selected option
-  List<Drug> _getFilteredDrugs() {
-    if (_filterOption == 'All') {
-      return drugList;
-    } else if (_filterOption == 'Prescription Required') {
-      return drugList.where((drug) => drug.prescriptionIsRequired).toList();
-    } else {
-      return drugList.where((drug) => !drug.prescriptionIsRequired).toList();
-    }
-  }
-
-  // Function to display drug details in a dialog
-  void _showDrugDetails(BuildContext context, Drug drug) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(drug.name),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(drug.Image, width: 100, height: 100),
-              const SizedBox(height: 10),
-              Text('Price: \$${drug.price}'),
-              Text('Expiry Date: ${drug.expiryDate}'),
-              Text('Company: ${drug.company}'),
-              const SizedBox(height: 10),
-              Text('Description: ${drug.infoDescription}'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
             ),
           ],
         );
