@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pharmasea/models/drug.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pharmasea/views/AboutPage.dart';
+import 'package:pharmasea/views/SearchPage.dart';
 import 'package:pharmasea/views/buyDrug.dart';
+import 'package:pharmasea/views/trackOrderPage.dart';
+import '../navigationBar.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -12,6 +17,8 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   String _filterOption = 'All'; // Default filter option
   String _selectedCategory = 'All'; // Default category filter
+  int _selectedIndex = 0; // To manage the selected bottom navigation index
+  final List<Widget> _pages = [Homepage(), SearchPage(),Aboutpage(),Trackorderpage()];
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +89,8 @@ class _HomepageState extends State<Homepage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _buildCategoryItem('heart', 'heart Drug', FontAwesomeIcons.heart),
-                    _buildCategoryItem('lung', 'lung Drug', FontAwesomeIcons.lungs),
+                    _buildCategoryItem('heart', 'Heart Drug', FontAwesomeIcons.heart),
+                    _buildCategoryItem('lung', 'Lung Drug', FontAwesomeIcons.lungs),
                     _buildCategoryItem('eye', 'Eye Drug', Icons.visibility_outlined),
                   ],
                 ),
@@ -101,7 +108,7 @@ class _HomepageState extends State<Homepage> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Two columns
+                  crossAxisCount: 3, // Three columns
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   childAspectRatio: 0.9, // Aspect ratio for the grid items
@@ -115,6 +122,19 @@ class _HomepageState extends State<Homepage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Navigate to the respective page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
+          );
+        },
       ),
     );
   }
@@ -140,65 +160,63 @@ class _HomepageState extends State<Homepage> {
 
   // Helper widget for building a product card
   Widget _buildProductCard(Drug drug) {
-    return 
-    GestureDetector(
-    onTap: () {
-      // Navigate to BuyDrug page when a drug is clicked
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BuyDrug(drug: drug),
+    return GestureDetector(
+      onTap: () {
+        // Navigate to BuyDrug page when a drug is clicked
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BuyDrug(drug: drug),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-      );
-    },
-    child: Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(5.0), // Reduced padding for smaller background
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                drug.Image,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  drug.Image,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Text(
-              drug.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+              Text(
+                drug.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                
-                Text(
-              '\$${drug.price}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '\$${drug.price}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () {
+                      _showDrugDetails(drug); // Show drug details when tapped
+                    },
+                  ),
+                ],
               ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.info_outline),
-              onPressed: () {
-                _showDrugDetails(drug); // Show drug details when tapped
-              },
-            ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 
@@ -283,7 +301,7 @@ class _HomepageState extends State<Homepage> {
                 },
               ),
               RadioListTile<String>(
-                title: const Text('No Prescription Required'),
+                title: const Text('No Prescription'),
                 value: 'No Prescription',
                 groupValue: _filterOption,
                 onChanged: (value) {
@@ -295,12 +313,6 @@ class _HomepageState extends State<Homepage> {
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
-            ),
-          ],
         );
       },
     );
